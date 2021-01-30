@@ -24,15 +24,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //自定义登录页面
                 .formLogin()
                 //登录页面设置
-                .loginPage("/login.html")
+//                .loginPage("/login.html")
                 //登录访问路径
-                .loginProcessingUrl("/user/login")
+//                .loginProcessingUrl("/user/login")
                 //登录成功后跳转路径
-                .defaultSuccessUrl("/index").permitAll()
+                .defaultSuccessUrl("/hi").permitAll()
                 //认证配置
                 .and().authorizeRequests()
                 //指定URL 直接访问，无需验证
-                .antMatchers("/", "/list", "/user/login").permitAll()
+                .antMatchers("/list").permitAll()
                 //其他请求 需要身份验证
                 .anyRequest().authenticated()
                 //关闭csrf 防护
