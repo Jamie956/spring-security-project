@@ -1,5 +1,6 @@
 package com.jamie;
 
+import com.jamie.security.TokenManager;
 import com.jamie.utils.MD5;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,5 +20,12 @@ public class FirstTest {
     public void t2() {
         String a = MD5.encrypt("11");
         String b = MD5.encrypt("22");
+    }
+
+    @Test
+    public void t3() {
+        TokenManager tokenManager = new TokenManager();
+        String token = tokenManager.createToken("jamie");
+        String user = tokenManager.getUserByToken(token);
     }
 }
