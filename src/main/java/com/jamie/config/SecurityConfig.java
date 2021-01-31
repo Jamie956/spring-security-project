@@ -11,13 +11,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     //注入密码加密方式
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        //退出
+        http.logout().logoutUrl("/logout").logoutSuccessUrl("/list").permitAll();
 
         //表单登录
         http

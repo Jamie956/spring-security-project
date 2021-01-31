@@ -1,5 +1,6 @@
 package com.jamie;
 
+import com.jamie.utils.MD5;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -12,5 +13,11 @@ public class FirstTest {
         System.out.println(secret);
         boolean isMatch = bCryptPasswordEncoder.matches("jamie956", secret);
         System.out.println(isMatch);
+    }
+
+    @Test
+    public void t2() {
+        String a = MD5.encrypt("11");
+        String b = MD5.encrypt("22");
     }
 }
