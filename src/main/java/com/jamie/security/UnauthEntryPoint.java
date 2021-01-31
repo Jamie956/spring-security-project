@@ -1,5 +1,7 @@
 package com.jamie.security;
 
+import com.jamie.utils.R;
+import com.jamie.utils.ResponseUtil;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
@@ -11,6 +13,6 @@ import java.io.IOException;
 public class UnauthEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        response.getWriter().println("未授权");
+        ResponseUtil.out(response, R.error());
     }
 }
