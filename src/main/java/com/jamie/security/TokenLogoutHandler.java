@@ -27,6 +27,6 @@ public class TokenLogoutHandler implements LogoutHandler {
             //redis 根据key=userName删除缓存
             redisTemplate.delete(userName);
         }
-        ResponseUtil.out(response, Result.ok());
+        ResponseUtil.out(response, Result.ok().message("退出成功"));
     }
 }
