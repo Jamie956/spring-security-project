@@ -26,6 +26,6 @@ public class FirstTest {
     public void t3() {
         TokenManager tokenManager = new TokenManager();
         String token = tokenManager.createToken("jamie");
-        String user = tokenManager.getUserByToken(token);
+        String user = tokenManager.getUser(token);
     }
 }

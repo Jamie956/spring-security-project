@@ -72,7 +72,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
                 .and().exceptionHandling()
-                .authenticationEntryPoint(new UnauthEntryPoint())//没有权限访问
+                //没有权限访问返回
+                .authenticationEntryPoint(new UnauthEntryPoint())
                 .and().csrf().disable()
                 .authorizeRequests()
                 .anyRequest().authenticated()

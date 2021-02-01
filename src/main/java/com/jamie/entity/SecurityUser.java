@@ -28,11 +28,20 @@ public class SecurityUser implements UserDetails {
         }
     }
 
+    public SecurityUser(User user, List<String> list) {
+        if (user != null) {
+            this.currentUserInfo = user;
+        }
+        if (list != null) {
+            this.permissionValueList = list;
+        }
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        for(String permissionValue : permissionValueList) {
-            if(StringUtils.isEmpty(permissionValue)) {
+        for (String permissionValue : permissionValueList) {
+            if (StringUtils.isEmpty(permissionValue)) {
                 continue;
             }
             SimpleGrantedAuthority authority = new SimpleGrantedAuthority(permissionValue);

@@ -1,7 +1,7 @@
 package com.jamie.security;
 
-import com.jamie.utils.R;
 import com.jamie.utils.ResponseUtil;
+import com.jamie.utils.Result;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
@@ -23,10 +23,10 @@ public class TokenLogoutHandler implements LogoutHandler {
 
         String token = request.getHeader("token");
         if(token != null) {
-            String userName = tokenManager.getUserByToken(token);
+            String userName = tokenManager.getUser(token);
             //redis 根据key=userName删除缓存
             redisTemplate.delete(userName);
         }
-        ResponseUtil.out(response, R.ok());
+        ResponseUtil.out(response, Result.ok());
     }
 }

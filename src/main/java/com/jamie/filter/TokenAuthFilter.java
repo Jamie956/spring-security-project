@@ -53,7 +53,7 @@ public class TokenAuthFilter extends BasicAuthenticationFilter {
         String token = request.getHeader("token");
         if (token != null) {
             //从token获取用户名
-            String username = tokenManager.getUserByToken(token);
+            String username = tokenManager.getUser(token);
             //从redis获取对应权限列表
             List<String> permissionValueList = (List<String>) redisTemplate.opsForValue().get(username);
             Collection<GrantedAuthority> authority = new ArrayList<>();

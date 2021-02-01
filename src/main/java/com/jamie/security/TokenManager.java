@@ -22,7 +22,7 @@ public class TokenManager {
         return Jwts.builder().setSubject(username).setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION)).signWith(SignatureAlgorithm.HS512, TOKEN_SIGN_KEY).compressWith(CompressionCodecs.GZIP).compact();
     }
 
-    public String getUserByToken(String token) {
+    public String getUser(String token) {
         return Jwts.parser().setSigningKey(TOKEN_SIGN_KEY).parseClaimsJws(token).getBody().getSubject();
     }
 }

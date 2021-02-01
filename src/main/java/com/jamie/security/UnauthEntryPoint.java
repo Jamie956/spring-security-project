@@ -1,7 +1,7 @@
 package com.jamie.security;
 
-import com.jamie.utils.R;
 import com.jamie.utils.ResponseUtil;
+import com.jamie.utils.Result;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
@@ -13,6 +13,6 @@ import java.io.IOException;
 public class UnauthEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        ResponseUtil.out(response, R.error());
+        ResponseUtil.out(response, Result.error());
     }
 }

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jamie.entity.SecurityUser;
 import com.jamie.entity.User;
 import com.jamie.security.TokenManager;
-import com.jamie.utils.R;
 import com.jamie.utils.ResponseUtil;
+import com.jamie.utils.Result;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -66,15 +66,12 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         //得到认证成功的用户
         SecurityUser securityUser = (SecurityUser) authResult.getPrincipal();
-
         //用户名和权限列表存到redis
         redisTemplate.opsForValue().set(securityUser.getUsername(), securityUser.getPermissionValueList());
-
         //获取token
         String token = tokenManager.createToken(securityUser.getUsername());
-
         //返回token
-        ResponseUtil.out(response, R.ok().data("token",token));
+        ResponseUtil.out(response, Result.ok().data("token",token));
     }
 
     /**
@@ -87,6 +84,6 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
      */
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        ResponseUtil.out(response, R.error());
+        ResponseUtil.out(response, Result.error());
     }
 }

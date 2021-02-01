@@ -1,12 +1,12 @@
 package com.jamie.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.jamie.entity.AclUser;
 import com.jamie.entity.Permission;
 import com.jamie.entity.SecurityUser;
 import com.jamie.entity.User;
-import com.jamie.entity.Users;
+import com.jamie.mapper.AclUserMapper;
 import com.jamie.mapper.PermissionMapper;
-import com.jamie.mapper.UsersMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class MyUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UsersMapper usersMapper;
+    private AclUserMapper aclUserMapper;
 
     @Autowired
     private PermissionMapper permissionMapper;
@@ -35,19 +35,22 @@ public class MyUserDetailsService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users dbUsers = usersMapper.selectOne(new QueryWrapper<Users>().eq("username", username));
-        if (dbUsers == null) {
+        //查询数据库用户
+        AclUser aclUser = aclUserMapper.selectOne(new QueryWrapper<AclUser>().eq("username", username));
+        if (aclUser == null) {
             throw new UsernameNotFoundException("用户名不存在");
         }
 
-        User curUser = new User();
-        BeanUtils.copyProperties(dbUsers, curUser);
+        //将数据库用户复制到请求用户对象
+        User user = new User();
+        BeanUtils.copyProperties(aclUser, user);
 
-        SecurityUser securityUser = new SecurityUser();
-        securityUser.setCurrentUserInfo(curUser);
+        //security 用户
+//        securityUser.setCurrentUserInfo(user);
+        //查询用户拥有的全部权限
         List<Permission> permissionsList = permissionMapper.selectList(new QueryWrapper<Permission>().eq("type", "2"));
-        securityUser.setPermissionValueList(permissionsList.stream().map(Permission::getPermissionValue).collect(Collectors.toList()));
-
-        return securityUser;
+        List<String> valueList = permissionsList.stream().map(Permission::getPermissionValue).collect(Collectors.toList());
+//        securityUser.setPermissionValueList(permissionsList.stream().map(Permission::getPermissionValue).collect(Collectors.toList()));
+        return new SecurityUser(user, valueList);
     }
 }
