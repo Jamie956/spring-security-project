@@ -19,7 +19,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
     @Autowired
     private TokenManager tokenManager;
     @Autowired
@@ -28,15 +27,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private MD5PasswordEncoder md5PasswordEncoder;
     @Autowired
     private UserDetailsService userDetailsService;
-
-//    @Autowired
-//    public SecurityConfig(UserDetailsService userDetailsService, MD5PasswordEncoder md5PasswordEncoder, TokenManager tokenManager, RedisTemplate redisTemplate) {
-//        this.userDetailsService = userDetailsService;
-//        this.md5PasswordEncoder = md5PasswordEncoder;
-//        this.tokenManager = tokenManager;
-//        this.redisTemplate = redisTemplate;
-//    }
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -67,12 +57,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new TokenAuthFilter(authenticationManager(), tokenManager, redisTemplate)).httpBasic();
     }
 
-    //调用userDetailsService和密码处理
+    /**
+     * 设置密码加密方式
+     */
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(md5PasswordEncoder);
     }
-    //不进行认证的路径，可以直接访问
+
+    /**
+     * 不进行认证的路径，可以直接访问
+     */
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/api/**");

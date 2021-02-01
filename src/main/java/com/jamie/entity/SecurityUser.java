@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-//通过认证的用户+权限列表
+/**
+ * spring security用户，包括用户和权限列表
+ */
 @Data
 public class SecurityUser implements UserDetails {
     //当前登录用户

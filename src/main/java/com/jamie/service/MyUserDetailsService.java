@@ -27,7 +27,7 @@ public class MyUserDetailsService implements UserDetailsService {
     private PermissionMapper permissionMapper;
 
     /**
-     * 数据库查询用户、密码、权限
+     * 把数据库查询用户对象、权限，加载到spring security
      *
      * @param username 用户名
      * @return 用户

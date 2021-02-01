@@ -29,13 +29,7 @@ public class TokenAuthFilter extends BasicAuthenticationFilter {
     }
 
     /**
-     * 设置上下文 SecurityContextHolder
-     *
-     * @param request
-     * @param response
-     * @param chain
-     * @throws IOException
-     * @throws ServletException
+     * 设置上下文 SecurityContextHolder 的 UsernamePasswordAuthenticationToken
      */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {

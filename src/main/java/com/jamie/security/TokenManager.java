@@ -5,7 +5,6 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import java.util.Date;
 
@@ -20,10 +19,20 @@ public class TokenManager {
      */
     private final static String TOKEN_SIGN_KEY = "123456";
 
+    /**
+     * 根据用户名获取token
+     * @param username
+     * @return
+     */
     public String createToken(String username) {
         return Jwts.builder().setSubject(username).setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION)).signWith(SignatureAlgorithm.HS512, TOKEN_SIGN_KEY).compressWith(CompressionCodecs.GZIP).compact();
     }
 
+    /**
+     * 根据token 获取用户信息
+     * @param token
+     * @return
+     */
     public String getUser(String token) {
         if(token.length() == 0) {
             throw new RuntimeException("token 不能为空");

@@ -38,11 +38,7 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     /**
-     * 获取提交表单的用户名和密码
-     * @param request
-     * @param response
-     * @return
-     * @throws AuthenticationException
+     * 获取提交表单的用户名和密码，交给 authenticationManager
      */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -57,12 +53,6 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     /**
      * 认证成功
-     * @param request
-     * @param response
-     * @param chain
-     * @param authResult
-     * @throws IOException
-     * @throws ServletException
      */
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
@@ -80,14 +70,9 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     /**
      * 认证失败
-     * @param request
-     * @param response
-     * @param failed
-     * @throws IOException
-     * @throws ServletException
      */
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        ResponseUtil.out(response, Result.error());
+        ResponseUtil.out(response, Result.error().message("认证失败了，检查你的账号或者密码"));
     }
 }
