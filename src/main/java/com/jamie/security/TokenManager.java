@@ -1,6 +1,7 @@
 package com.jamie.security;
 
 import io.jsonwebtoken.CompressionCodecs;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,10 @@ public class TokenManager {
     }
 
     public String getUser(String token) {
-        return Jwts.parser().setSigningKey(TOKEN_SIGN_KEY).parseClaimsJws(token).getBody().getSubject();
+        try {
+            return Jwts.parser().setSigningKey(TOKEN_SIGN_KEY).parseClaimsJws(token).getBody().getSubject();
+        }catch (ExpiredJwtException e) {
+            throw new RuntimeException("你的token过期了哦");
+        }
     }
 }

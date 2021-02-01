@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
     private TokenManager tokenManager;
@@ -71,7 +73,9 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
         //获取token
         String token = tokenManager.createToken(securityUser.getUsername());
         //返回token
-        ResponseUtil.out(response, Result.ok().data("token",token));
+        Map<String, String> data = new HashMap<>();
+        data.put("token", token);
+        ResponseUtil.out(response, Result.ok().data(data));
     }
 
     /**

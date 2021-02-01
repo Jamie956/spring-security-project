@@ -1,43 +1,20 @@
 package com.jamie.utils;
 
 import lombok.Data;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.http.HttpStatus;
 
 @Data
 public class Result {
-    private Boolean success;
     private Integer code;
     private String message;
+    private Object data;
 
-    private Map<String, Object> data = new HashMap<>();
-
-    //把构造方法私有
-    private Result() {
-    }
-
-    //成功静态方法
     public static Result ok() {
-        Result r = new Result();
-        r.setSuccess(true);
-        r.setCode(20000);
-        r.setMessage("成功");
-        return r;
+        return new Result().code(HttpStatus.OK.value());
     }
 
-    //失败静态方法
     public static Result error() {
-        Result r = new Result();
-        r.setSuccess(false);
-        r.setCode(20001);
-        r.setMessage("失败");
-        return r;
-    }
-
-    public Result success(Boolean success) {
-        this.setSuccess(success);
-        return this;
+        return new Result().code(HttpStatus.BAD_REQUEST.value());
     }
 
     public Result message(String message) {
@@ -50,13 +27,8 @@ public class Result {
         return this;
     }
 
-    public Result data(String key, Object value) {
-        this.data.put(key, value);
-        return this;
-    }
-
-    public Result data(Map<String, Object> map) {
-        this.setData(map);
+    public Result data(Object data) {
+        this.setData(data);
         return this;
     }
 }

@@ -45,12 +45,9 @@ public class MyUserDetailsService implements UserDetailsService {
         User user = new User();
         BeanUtils.copyProperties(aclUser, user);
 
-        //security 用户
-//        securityUser.setCurrentUserInfo(user);
         //查询用户拥有的全部权限
         List<Permission> permissionsList = permissionMapper.selectList(new QueryWrapper<Permission>().eq("type", "2"));
         List<String> valueList = permissionsList.stream().map(Permission::getPermissionValue).collect(Collectors.toList());
-//        securityUser.setPermissionValueList(permissionsList.stream().map(Permission::getPermissionValue).collect(Collectors.toList()));
         return new SecurityUser(user, valueList);
     }
 }

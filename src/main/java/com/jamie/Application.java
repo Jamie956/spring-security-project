@@ -6,10 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan("com.jamie.mapper")
-public class SpringSecurityProjectApplication {
-
+public class Application {
     public static void main(String[] args) {
-        SpringApplication.run(SpringSecurityProjectApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
-
 }

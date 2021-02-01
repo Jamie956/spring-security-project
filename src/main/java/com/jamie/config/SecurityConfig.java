@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                //自定义登录页面
 //                .formLogin()
 //                //登录页面设置
-////                .loginPage("/login.html")
+////                .loginPage("")
 //                //登录访问路径
 ////                .loginProcessingUrl("/user/login")
 //                //登录成功后跳转路径
